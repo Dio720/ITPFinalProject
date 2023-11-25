@@ -1,7 +1,7 @@
 # ITPFinalProject
 
 1. Clone o repositório para o seu PC:
-   * Dependendo do método de autenticação (SSH ou HTTPS), você pode dar um desses dois comandos.
+   * Dependendo do método de autenticação (SSH ou HTTPS), você pode dar um desses dois comandos (Acho que no seu caso provavelmente vai ser HTTPS).
    * ```
      git clone https://github.com/Dio720/ITPFinalProject.git -- HTTPS
      git clone git@github.com:Dio720/ITPFinalProject.git     -- SSH
