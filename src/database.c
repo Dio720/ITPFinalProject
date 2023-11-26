@@ -19,11 +19,15 @@ int main() {
 
     initialize_database(filename);  // Inicializa o banco de dados
 
-    create_table(filename);  // Cria uma nova tabela
+    list_tables(filename);            // Lista as tabelas do banco de dados
+
+    // create_table(filename);  // Cria uma nova tabela
+
+    delete_table(filename);  // Deleta uma tabela
 
     save_tables_to_file(filename);  // Salva as tabelas no arquivo
 
     return 0;
 }
 
-// última atualização: 2023-11-25 -- dio
+// última atualização: 2023-11-26 -- dio
