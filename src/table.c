@@ -84,19 +84,7 @@ void list_tables(const char *filename) {
         printf("  · Tabela %d: %s\n", i + 1, tables[i].name);   // Imprime o nome de cada tabela
 }
 
-int find_closest_table(const char *table_name) {
-    int closest = -1;                       // Índice da tabela mais próxima
-    int closest_distance = INT_MAX;         // Distância mínima entre o nome da tabela e o nome de uma tabela existente, INT_MAX pq é o maior valor possível para um int
-    for (int i = 0; i < num_tables; i++) {                                  // Para cada tabela:
-        int distance = levenshtein_distance(table_name, tables[i].name);    //  1. Calcula-se a distância de Levenshtein entre o nome da tabela e o nome da tabela atual
-        if (distance < closest_distance) {                                  //  2. Se a distância for menor que a distância mínima:
-            closest = i;                                                    //      * O índice da tabela mais próxima é atualizado
-            closest_distance = distance;                                    //      * A distância mínima é atualizada
-        }
-    }
-    return closest;
-}
-
+// Função para deletar uma tabela
 void delete_table(const char *filename) {
     int min_distance = INT_MAX; // Distância mínima entre o nome da tabela e o nome de uma tabela existente, INT_MAX pq é o maior valor possível para um int
     int closest_tables[3];      // Supondo um máximo de 3 tabelas próximas
