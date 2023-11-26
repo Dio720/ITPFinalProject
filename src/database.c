@@ -5,11 +5,6 @@
 #include "database.h"
 #include "file_operations.h"
 #include "table.h"
-#include "data.h"
-#include "aux_functions.h"
-#include <stdio.h>
-#include <strings.h>
-#include <limits.h>
 
 Table tables[10];  // Ajustar de acordo com o número máximo de tabelas ou alocar dinâmicamente
 int num_tables = 0;
