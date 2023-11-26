@@ -58,7 +58,7 @@ double read_double_from_user() {
 
 // Função que remove o \n do final de uma string
 void remove_newline(char *str) {
-    int len = strlen(str);                              // Tamanho da string
+    unsigned len = strlen(str);                         // Tamanho da string, unsigned porque strlen retorna um unsigned long int, só unsigned ou unsigned long, tanto faz
     if (len > 0 && str[len-1] == '\n') {                // Se o tamanho for maior que 0 e o último caractere for \n
         str[len-1] = '\0';                              // Substitui o \n por \0
     } else {
@@ -70,11 +70,11 @@ void remove_newline(char *str) {
 
 // Função que calcula a distância de Levenshtein entre duas strings
 int levenshtein_distance(const char *string1, const char *string2) {
-    int string1_len = strlen(string1);
-    int string2_len = strlen(string2);
+    unsigned string1_len = strlen(string1); // Tamanho da string1, unsigned porque strlen retorna um unsigned long int, só unsigned ou unsigned long, tanto faz
+    unsigned string2_len = strlen(string2); // Mesma coisa aqui
 
-    if (string1_len == 0) return string2_len; // Se uma das strings for vazia, retorna o tamanho da outra
-    if (string2_len == 0) return string1_len; // Mesma coisa aqui
+    if (string1_len == 0) return (int)string2_len; // Se uma das strings for vazia, retorna o tamanho da outra string
+    if (string2_len == 0) return (int)string1_len; // Mesma coisa aqui
 
     int *d = malloc((string1_len + 1) * (string2_len + 1) * sizeof(int));   // Aloca memória para o vetor de distâncias
     if (d == NULL) {
