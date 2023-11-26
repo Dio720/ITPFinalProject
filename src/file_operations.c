@@ -26,6 +26,8 @@ FILE* initialize_database(const char *filename) {   // Eu acho uma doidera o tip
 
 // Função que carrega as tabelas do arquivo
 void load_tables_from_file(FILE *file) {
+    // TODO: Corrigir warning do sscanf
+
     num_tables = 0;   // Zera o número de tabelas
     Table table;     // Tabela temporária
     char line[256]; // Buffer para ler uma linha do arquivo

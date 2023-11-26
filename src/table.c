@@ -25,8 +25,7 @@ bool name_table_is_valid(const char *table_name) {
 // Função para criar uma nova tabela
 void create_table(const char *filename) {
     Table table; // Tabela temporária
-    
-    // TODO: alguma entrada não for válida, um loop?
+
     // TODO: Maior interatividade dentro dela?
 
     // Recebe o nome da tabela
@@ -114,7 +113,7 @@ void delete_table(const char *filename) {
     }
 
     if (min_distance != 0) {    // Se a distância mínima for diferente de 0, ou seja, se não houver correspondência exata
-        printf("As tabelas mais próximas são:\n");
+        printf("Você não quis dizer uma dessas?\n");
         for (int i = 0; i < num_closest; i++) {                             // Para cada tabela próxima:
             printf(" · %d: %s\n", i + 1, tables[closest_tables[i]].name);   // Imprime os nomes mais parecidos com o digitado pelo usuário
         }
