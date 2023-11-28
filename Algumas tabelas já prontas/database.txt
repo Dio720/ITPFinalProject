@@ -1,0 +1,10 @@
+Berserk,4,2
+Gatts,0
+Caska,1
+Griffith,2
+Zodd,3
+Jujustsu Kaisen,4,3
+Itadori,3
+Sukuna,4
+Gojo,0
+Megumi,2
