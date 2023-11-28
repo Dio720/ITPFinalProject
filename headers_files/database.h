@@ -16,8 +16,17 @@ typedef enum {
 } DataType; // Tipos de dados suportados de cada coluna
 
 typedef struct {
+    int i;
+    float f;
+    double d;
+    char c;
+    char s[50];
+} EntrieType; // Struct com os tipos de entrada pra o array dinâmico
+
+typedef struct {
     char name[50];
     DataType type;
+    void **entries;
 } Column;   // Colunas de uma tabela
 
 typedef struct {

@@ -12,8 +12,63 @@
 #include <string.h>
 #include <stdbool.h>
 
-void create_row() {
-    /* Implementação de função que cria uma nova linha na tabela:
+void create_row(Table vetorTabelas[10], const char *filename) {
+    char nomeTabela[50];
+    Table tabelaAtual;
+    printf("Digite o nome da tabela para adicionar a linha: ");
+    fgets(nomeTabela, 50, stdin);
+    for (int i = 0; i < 10; i++){
+        if (strcmp(nomeTabela, vetorTabelas[i].name) == 0){
+            tabelaAtual = vetorTabelas[i];
+            break;
+        }
+    }
+
+    printf("Digite os valores que terão na linha: ");
+    for (int i = 0; i < 10; i++){
+        if(tabelaAtual.columns[i].type == INT){
+            int entrada;
+            scanf("%d", &entrada);
+            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
+            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
+        }
+        if(tabelaAtual.columns[i].type == FLOAT){
+            float entrada;
+            scanf("%f", &entrada);
+            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
+            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
+            tabelaAtual.columns->entries[i] = &entrada;
+
+        }
+        if(tabelaAtual.columns[i].type == DOUBLE){
+            double entrada;
+            scanf("%f", &entrada);
+            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
+            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
+            tabelaAtual.columns->entries[i] = &entrada;
+            
+        }
+        if(tabelaAtual.columns[i].type == CHAR){
+            char entrada;
+            scanf("%c", &entrada);
+            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
+            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
+            tabelaAtual.columns->entries[i] = &entrada;
+            
+        }
+        if(tabelaAtual.columns[i].type == STRING){
+            char entrada[50];
+            fgets(entrada, 50, stdin);
+            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
+            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
+            tabelaAtual.columns->entries[i] = &entrada;
+        }
+
+    save_tables_to_file(filename);
+    
+    }
+}
+/* Implementação de função que cria uma nova linha na tabela:
      * 1. Recebe o nome da tabela
      * 2. Recebe os valores de cada uma das colunas
      * 3. Verifica se os valores são válidos
@@ -21,8 +76,6 @@ void create_row() {
      * 6. Verificar a chave primária
      * * 6.1 Em uma tabela deve existir um único valor para a chave primária, se o usuário tentar inserir um valor que já existe, deve retornar um erro
      */
-}
-
 void list_data() {
     /* Implementação de função que lista os dados de uma tabela em formato CSV:
      * 1. Recebe o nome da tabela
