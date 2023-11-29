@@ -1,17 +1,33 @@
-cmake_minimum_required(VERSION 3.26)    # Versão mínima do CMake
-project(Projeto_final_ITP C)            # Define o nome do projeto
+# Especifica a versão mínima do CMake necessária para compilar este projeto.
+cmake_minimum_required(VERSION 3.26)
 
-set(CMAKE_C_STANDARD 23)
-set(CMAKE_C_STANDARD_REQUIRED True)     # Define a versão do C
+# Define o nome do projeto e a linguagem de programação usada.
+project(ITPFinalProject C)
 
-include_directories(headers_files)      # Adiciona o diretório de headers_files
+# Define o padrão da linguagem C a ser usado para compilar os arquivos de origem.
+set(CMAKE_C_STANDARD 11)
 
-add_library(Projeto_final_ITP
-        src/table.c
-        src/data.c
+# Cria uma biblioteca chamada 'mylib' com os arquivos de origem especificados.
+add_library(mylib
         src/file_operations.c
-        src/aux_functions.c
-        headers_files/aux_functions.h)          # Adiciona a biblioteca
+        src/database.c
+        src/utils_file_operations.c
+        src/data.c
+        src/table.c
+        src/utils.c
+)
 
-add_executable(main src/database.c)             # Adiciona o executável
-target_link_libraries(main Projeto_final_ITP)   # Adiciona a biblioteca ao executável
+# Adiciona o diretório 'include' ao caminho de inclusão para a biblioteca 'mylib'.
+target_include_directories(mylib PUBLIC include)
+
+# Cria um executável chamado 'main' com o arquivo de origem especificado.
+add_executable(main src/main.c)
+
+# Vincula a biblioteca 'mylib' ao executável 'main'.
+target_link_libraries(main mylib)
+
+# Cria um executável chamado 'tests' com o arquivo de origem especificado.
+add_executable(tests src/tests.c)
+
+# Vincula as bibliotecas 'mylib' e 'cunit' ao executável 'tests'.
+target_link_libraries(tests mylib cunit)
