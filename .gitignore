@@ -22,3 +22,6 @@ cmake-build-release/
 *.log
 *.tmp
 *.temp
+
+# PDFs
+.pdf
