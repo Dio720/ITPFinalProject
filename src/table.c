@@ -5,9 +5,11 @@
 #include "database.h"
 #include "file_operations.h"
 #include "aux_functions.h"
+#include "table.h"
 #include <stdio.h>
 #include <strings.h>
 #include <limits.h>
+#include <stdbool.h>
 
 extern Table tables[10];
 extern int num_tables;

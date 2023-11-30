@@ -16,7 +16,9 @@ int main() {
 
     list_tables(filename);            // Lista as tabelas do banco de dados
 
-    // create_table(filename);  // Cria uma nova tabela
+    create_table(filename);  // Cria uma nova tabela
+
+    create_row(tables[10], filename);
 
     delete_table(filename);  // Deleta uma tabela
 

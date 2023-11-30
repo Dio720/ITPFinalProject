@@ -13,61 +13,60 @@
 #include <stdbool.h>
 
 void create_row(Table vetorTabelas[10], const char *filename) {
+
+    
     char nomeTabela[50];
     Table tabelaAtual;
     printf("Digite o nome da tabela para adicionar a linha: ");
     fgets(nomeTabela, 50, stdin);
-    for (int i = 0; i < 10; i++){
-        if (strcmp(nomeTabela, vetorTabelas[i].name) == 0){
+
+    for (int i = 0; i < 10; i++) {
+        if (strcmp(nomeTabela, vetorTabelas[i].name) == 0) {
             tabelaAtual = vetorTabelas[i];
             break;
         }
     }
 
     printf("Digite os valores que terão na linha: ");
-    for (int i = 0; i < 10; i++){
-        if(tabelaAtual.columns[i].type == INT){
-            int entrada;
-            scanf("%d", &entrada);
-            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
-            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
-        }
-        if(tabelaAtual.columns[i].type == FLOAT){
-            float entrada;
-            scanf("%f", &entrada);
-            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
-            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
-            tabelaAtual.columns->entries[i] = &entrada;
 
-        }
-        if(tabelaAtual.columns[i].type == DOUBLE){
-            double entrada;
-            scanf("%f", &entrada);
-            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
-            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
-            tabelaAtual.columns->entries[i] = &entrada;
-            
-        }
-        if(tabelaAtual.columns[i].type == CHAR){
-            char entrada;
-            scanf("%c", &entrada);
-            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
-            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
-            tabelaAtual.columns->entries[i] = &entrada;
-            
-        }
-        if(tabelaAtual.columns[i].type == STRING){
-            char entrada[50];
+    tabelaAtual.columns->entries = malloc(sizeof(void*) * 100);
+
+    for (int i = 0; i < tabelaAtual.num_columns; i++) {
+        if (tabelaAtual.columns[i].type == INT) {
+            int *entrada = malloc(sizeof(int));
+            scanf("%d", entrada);
+            tabelaAtual.columns->entries[i] = entrada;
+        } else if (tabelaAtual.columns[i].type == FLOAT) {
+            float *entrada = malloc(sizeof(float));
+            scanf("%f", entrada);
+            tabelaAtual.columns->entries[i] = entrada;
+        } else if (tabelaAtual.columns[i].type == DOUBLE) {
+            double *entrada = malloc(sizeof(double));
+            scanf("%lf", entrada);
+            tabelaAtual.columns->entries[i] = entrada;
+        } else if (tabelaAtual.columns[i].type == CHAR) {
+            getchar(); // Consumir o caractere de nova linha anterior
+            char *entrada = malloc(sizeof(char));
+            scanf("%c", entrada);
+            tabelaAtual.columns->entries[i] = entrada;
+        } else if (tabelaAtual.columns[i].type == STRING) {
+            char *entrada = malloc(50 * sizeof(char));
             fgets(entrada, 50, stdin);
-            tabelaAtual.columns->entries = malloc(sizeof(void*)*100);
-            struct EntrieType* m = (EntrieType*)malloc(sizeof(EntrieType));
-            tabelaAtual.columns->entries[i] = &entrada;
+            tabelaAtual.columns->entries[i] = entrada;
         }
+    }
 
     save_tables_to_file(filename);
-    
+
+    // Liberar memória alocada para entradas
+    for (int i = 0; i < tabelaAtual.num_columns; i++) {
+        free(tabelaAtual.columns->entries[i]);
     }
+
+    // Liberar o array de entradas
+    free(tabelaAtual.columns->entries);
 }
+
 /* Implementação de função que cria uma nova linha na tabela:
      * 1. Recebe o nome da tabela
      * 2. Recebe os valores de cada uma das colunas
