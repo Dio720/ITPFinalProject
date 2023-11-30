@@ -1,3 +1,12 @@
+# Patch Notes (29/11/2023 ~ schwaad)
+# Mudanças gerais:
+* Mudei o nome da delete_data() do data.c pra `camelCase`
+
+# Mudanças no código:
+* Implementei as funções do utils.c
+* Coloquei uma interfacezinha pra executar os comandos na main.c
+* Mais informações nos comentários dos arquivos!!
+
 # Patch Notes (28/11/2023 ~ Dio)
 ## Mudanças Gerais:
 * Adicionado o sistema de patch notes.

@@ -27,7 +27,7 @@ void listData() {
      */
 }
 
-void delete_data() {
+void deleteData() {
     /* Implementação de função que deleta uma linha (registro, tupla, meu cu, so
      * nome feio) da tabela:
      * 1. Recebe o nome da tabela
