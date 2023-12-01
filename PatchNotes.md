@@ -42,7 +42,7 @@
 ## Mudanças gerais:
 * Mudei o nome da delete_data() do data.c pra `camelCase`
 
-## Mudanças no código:
+### Mudanças no código:
 * Implementei as funções do utils.c
 * Coloquei uma interfacezinha pra executar os comandos na main.c
 * Mais informações nos comentários dos arquivos!!
