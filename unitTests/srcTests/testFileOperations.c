@@ -27,8 +27,6 @@ void testProcessFileContentWithKnownContent() {
     initDatabase();
     processFileContent(content);
 
-
-    // Verifique se as informações foram carregadas corretamente na estrutura de banco de dados
     CU_ASSERT_EQUAL(numTables, 4)
     CU_ASSERT_STRING_EQUAL(tables[0].name, "Alunos")
     CU_ASSERT_EQUAL(tables[0].numColumns, 4)
@@ -36,7 +34,6 @@ void testProcessFileContentWithKnownContent() {
     CU_ASSERT_STRING_EQUAL(tables[0].columns[0].name, "ID")
     CU_ASSERT_EQUAL(tables[0].columns[0].type, INT)
 
-    // Verificações adicionais para as células da tabela "Alunos"
     int expectedAlunosIDs[3] = {0, 1, 2};
     char *expectedAlunosNames[3] = {"João", "Maria", "Pedro"};
     int expectedAlunosAges[3] = {15, 16, 15};
@@ -54,7 +51,6 @@ void testProcessFileContentWithKnownContent() {
     CU_ASSERT_STRING_EQUAL(tables[1].columns[0].name, "ID")
     CU_ASSERT_EQUAL(tables[1].columns[0].type, INT)
 
-    // Verificações adicionais para as células da tabela "Professores"
     int expectedProfessoresIDs[2] = {3, 4};
     char *expectedProfessoresNames[2] = {"Carlos", "Ana"};
     int expectedProfessoresAges[2] = {35, 30};
@@ -66,7 +62,6 @@ void testProcessFileContentWithKnownContent() {
         CU_ASSERT_STRING_EQUAL(tables[1].rows[i].cells[3].value.stringValue, expectedProfessoresDisciplinas[i])
     }
 
-    // Verificações adicionais para a tabela "Funcionários"
     CU_ASSERT_STRING_EQUAL(tables[2].name, "Funcionários")
     CU_ASSERT_EQUAL(tables[2].numColumns, 4)
     CU_ASSERT_EQUAL(tables[2].numRows, 3)
@@ -84,7 +79,6 @@ void testProcessFileContentWithKnownContent() {
         CU_ASSERT_STRING_EQUAL(tables[2].rows[i].cells[3].value.stringValue, expectedFuncionariosCargos[i])
     }
 
-    // Verificações adicionais para a tabela "Departamentos"
     CU_ASSERT_STRING_EQUAL(tables[3].name, "Departamentos")
     CU_ASSERT_EQUAL(tables[3].numColumns, 3)
     CU_ASSERT_EQUAL(tables[3].numRows, 2)
@@ -104,7 +98,6 @@ void testProcessFileContentWithKnownContent() {
 }
 
 void testSaveDatabaseToFile() {
-    // Inicialize o banco de dados com os dados conhecidos do arquivo testFileWithKnownContent.txt
     const char *inputFilename = "testFiles/testFileWithKnownContent.txt";
     char *inputContent = readFile(inputFilename);
     CU_ASSERT_PTR_NOT_NULL_FATAL(inputContent)
@@ -112,16 +105,13 @@ void testSaveDatabaseToFile() {
     initDatabase();
     processFileContent(inputContent);
 
-    // Salve o banco de dados em um novo arquivo usando saveDatabaseToFile
     const char *outputFilename = "testFiles/testSaveDatabaseToFileOutput.txt";
     bool saveResult = saveDatabaseToFile(outputFilename);
     CU_ASSERT_TRUE_FATAL(saveResult)
 
-    // Leia o conteúdo do novo arquivo
     char *outputContent = readFile(outputFilename);
     CU_ASSERT_PTR_NOT_NULL_FATAL(outputContent)
 
-    // Compare o conteúdo do novo arquivo com o conteúdo do arquivo original
     char *expectedContent = readFile(inputFilename);
     CU_ASSERT_STRING_EQUAL(expectedContent, outputContent)
 

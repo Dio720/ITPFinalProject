@@ -68,8 +68,8 @@ bool saveDatabaseToFile(const char *filename) {
     }
 
     for (int i = 0; i < MAX_TABLES; i++) {
-        Table *table = &tables[i]; // Substitua 'database' pelo seu array de tabelas
-        if (strlen(table->name) == 0) continue; // Pula tabelas vazias
+        Table *table = &tables[i];
+        if (strlen(table->name) == 0) continue;
 
         fprintf(file, "Tabela %d: \"%s\", Quantidade de colunas: %d, Quantidade de linhas: %d\n", i + 1, table->name, table->numColumns, table->numRows);
 
