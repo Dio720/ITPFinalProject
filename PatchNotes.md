@@ -28,6 +28,13 @@
 * Adicionados diretórios de inclusão para `include` e `unitTests/includeTests`.
 * Especificados os arquivos fonte para a biblioteca `mylib` e `testlib`.
 
+### Hotfixes:
+
+* Refiz e renomeei algumas funções do `utils.c / utils.h`.
+* Reutilizei um função `levenshteinDistance()` e a renomeei para `calculateStringSimilarity()`.
+* Na `main.c` troquei a chamada da função menu e a leitura da entrada.
+* Ajeitei um pouquinho a documentação do código.
+
 ### TODOs:
 
 * [ ] Implementar um melhor tratamento de erros nas funções relacionadas ao processamento de arquivo.
