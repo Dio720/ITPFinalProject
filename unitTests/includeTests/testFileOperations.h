@@ -11,7 +11,7 @@ void testSaveDatabaseToFile();
 
 #endif //ITPFINALPROJECT_TESTFILEOPERATIONS_H
 
-/** Patch Notes (29/11/2023 -- Dio):
+/** Patch Notes (30/11/2023 -- Dio):
  * - Adicionei a função testSaveDatabaseToFile()
  * - Adicionei a função testLoadSavedDatabaseFile()
  * - Adicionei a função testProcessFileContentWithKnownContent()

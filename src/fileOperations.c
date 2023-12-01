@@ -189,3 +189,7 @@ bool saveDatabaseToFile(const char *filename) {
  * - Adotei uma nova abordagem para a leitura do arquivo, agora a função readFile() retorna uma string
  * - Adicionei a função processFileContent() para processar o conteúdo da string consequentemente do Arquivo
  */
+
+/** Patch Notes (30/11/2023 -- Dio):
+ * - Adicionei a função saveDatabaseToFile() para salvar o banco de dados em um arquivo
+ */

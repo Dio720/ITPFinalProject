@@ -1,4 +1,4 @@
-# Patch Notes (29/11/2023 ~ Dio)
+# Patch Notes (30/11/2023 ~ Dio)
 
 ## Mudanças Gerais:
 
@@ -7,6 +7,7 @@
 * Adicionado o arquivo `createTestFiles.c` para gerar arquivos de teste.
 * Adicionado o arquivo `testFileOperations.c / tesFileOperations.h` para testar as operações de arquivo.
 * Atualizei o `CMake` e o deixei mais organizado.
+* Correção de bugs e melhorias no código.
 
 ### Mudanças no código:
 

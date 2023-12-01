@@ -89,7 +89,7 @@ int main() {
     return 0;
 }
 
-/** Patch Notes (29/11/2023 ~ Dio):
+/** Patch Notes (30/11/2023 ~ Dio):
  * - Criei essa bomba aqui de arquivo
  * - Ainda não sei se vai funcionar
  * - Mas tem potencial

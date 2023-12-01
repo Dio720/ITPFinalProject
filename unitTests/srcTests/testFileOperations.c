@@ -172,6 +172,6 @@ void testSaveDatabaseToFile() {
  * 10. Libera a memória alocada para o conteúdo dos arquivos.
  */
 
-/** Patch Notes (29/11/23 -- Dio):
+/** Patch Notes (30/11/23 -- Dio):
  * - Adicionado testes para o processo de carregar e salvar um banco de dados de um arquivo
  */
