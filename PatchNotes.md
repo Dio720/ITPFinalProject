@@ -1,18 +1,5 @@
-<<<<<<< HEAD
 # Patch Notes (30/11/2023 ~ Dio)
 
-=======
-# Patch Notes (29/11/2023 ~ schwaad)
-# Mudanças gerais:
-* Mudei o nome da delete_data() do data.c pra `camelCase`
-
-# Mudanças no código:
-* Implementei as funções do utils.c
-* Coloquei uma interfacezinha pra executar os comandos na main.c
-* Mais informações nos comentários dos arquivos!!
-
-# Patch Notes (28/11/2023 ~ Dio)
->>>>>>> Zeivo
 ## Mudanças Gerais:
 
 * Adicionado testes para o processo de carregar e salvar um banco de dados de um arquivo.
@@ -28,10 +15,10 @@
   * Adicionado as funções `testReadFile()`, `testProcessFileContentWithKnownContent()`, `testSaveDatabaseToFile()`.
 
 * #### `createTestFiles.c`:
-    * Adicionado a função `generateValidTestFile()` para gerar arquivos de teste válidos.
-    * Adicionado a função `generateRandomString()` para gerar strings aleatórias para os testes.
-    * Nenhuma das duas funciona como deveria!
-  
+  * Adicionado a função `generateValidTestFile()` para gerar arquivos de teste válidos.
+  * Adicionado a função `generateRandomString()` para gerar strings aleatórias para os testes.
+  * Nenhuma das duas funciona como deveria!
+
 * #### `src/fileOperations.c`:
   * Adicionado a função `saveDatabaseToFile()` para salvar o banco de dados em um arquivo.
 
@@ -52,6 +39,7 @@
 
 
 # Patch Notes (29/11/2023 ~ schwaad)
+
 ## Mudanças gerais:
 * Mudei o nome da delete_data() do data.c pra `camelCase`
 
@@ -79,22 +67,22 @@
 ### Mudanças no código:
 
 * #### `database.c / database.h`:
-    * Criação da `initDatabase`.
-    * Criação da `initCellAsEmpty`.
+  * Criação da `initDatabase`.
+  * Criação da `initCellAsEmpty`.
 * #### `file_operations.c / file_operations.h`:
-    * Adotada uma nova abordagem para ler o arquivo e carregar no sistema.
-    * Criação da `readFile`.
-    * Criação da `processFileContent`.
+  * Adotada uma nova abordagem para ler o arquivo e carregar no sistema.
+  * Criação da `readFile`.
+  * Criação da `processFileContent`.
 * #### `utils_file_operations.c / utils_file_operations.h`:
-    * Programa criado para auxiliar as operações de arquivos em `file_operations.c`.
-    * Criação da`convertStringToCell` para processar o valor de uma célula da linha.
-    * Criação da `processRows`.
-    * Criação da `processColumns`.
-    * Criação da `processTable`.
+  * Programa criado para auxiliar as operações de arquivos em `file_operations.c`.
+  * Criação da`convertStringToCell` para processar o valor de uma célula da linha.
+  * Criação da `processRows`.
+  * Criação da `processColumns`.
+  * Criação da `processTable`.
 * #### `table.c / table.h`:
-    * Descartada a versão anterior do código para estudar melhor implementação.
+  * Descartada a versão anterior do código para estudar melhor implementação.
 * #### `utils.c / utils.h`:
-    * Descartada a versão anterior do código para estudar melhor implementação.
+  * Descartada a versão anterior do código para estudar melhor implementação.
 
 ### Mudanças no `CMake`:
 
@@ -111,4 +99,3 @@
 * [ ] Criar as funções de manipulação de linha e de células.
 * [ ] Levar em consideração a informação armazenada na coluna ID ao processar o arquivo.
 * [ ] Estruturar uma interface na `main.c` para o usuário.
-
