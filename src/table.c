@@ -5,7 +5,7 @@
 #include "database.h"
 
 extern Table tables[10];
-extern int num_tables;
+extern int numTables;
 
 // TODO: createTable() e listTables() são funções que devem ser implementadas
 
