@@ -52,8 +52,8 @@ typedef struct {
     Row rows[MAX_ROWS];
 } Table;
 
-void initDatabase(); // Função para inicializar o banco de dados
-void initCellAsEmpty(Cell *cell); // Função para inicializar uma célula como vazia
+void initDatabase();
+void initCellAsEmpty(Cell *cell);
 
 #endif // PROJETO_FINAL_ITP_DATABASE_H
 
