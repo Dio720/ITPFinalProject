@@ -1,3 +1,40 @@
+# Patch Notes (01/12/2023 ~ Dio)
+
+## Mudaças Gerais:
+
+* Adicionei unidades de testes para as funções auxiliares de `utils.c` no novo arquivo `testUtils` e seu suite no `tests.c`.
+* Adicionei as funções de manipulação de tabela.
+* #### AINDA NÃO TESTEI AS DE MANIPULAR TABELA!
+  * Mas a princípio me parece ok, sem nenhum warning ou erro de compilação.
+
+### Mudanças no código:
+
+* #### `testUtils.c / testUtils.h`:
+  * Criação da `testReadInt()`;
+  * Criação da `testReadDouble()`;
+  * Criação da `testRemoveNewLine()`;
+  * Criação da `testCalculateStringSimilarity()`;
+  * Criação da `testSuggestName()`;  
+
+* #### `table.c / table.h`:
+  * Criação da `createTable()`;
+  * Criação da `deleteTable()`;
+  * Criação de `listTables()`;
+
+### Hotfixes:
+
+* Correção de bugs e melhorias no código nos arquivos de cabeçalho.
+
+### TODOs:
+
+* [ ] Implementar um melhor tratamento de erros nas funções relacionadas ao processamento de arquivo.
+* [x] Criar novas funções para manipular arquivos, como `saveFile`, `createFile`.
+* [x] Criar as funções de manipulação de tabela.
+* [ ] Criar as funções de manipulação de linha e de células.
+* [ ] Levar em consideração a informação armazenada na coluna ID ao processar o arquivo.
+* [ ] Estruturar uma interface na `main.c` para o usuário.
+
+
 # Patch Notes (30/11/2023 ~ Dio)
 
 ## Mudanças Gerais:
