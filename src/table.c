@@ -178,7 +178,62 @@ void deleteTable() {
     printf("A tabela '%s' foi removida com sucesso.\n", tableName);
 }
 
+/**
+ * Função: createTable
+ * -------------------
+ * Cria uma nova tabela no banco de dados.
+ *
+ * A função segue os seguintes passos:
+ * 1. Verifica se o número de tabelas já atingiu o máximo permitido. Se sim, imprime uma mensagem de erro e retorna.
+ * 2. Solicita ao usuário o nome da tabela.
+ * 3. Verifica se o usuário digitou 'q' ou 'Q' para abortar a operação. Se sim, retorna.
+ * 4. Valida a entrada do usuário para garantir que o nome da tabela não esteja vazio e não exceda o comprimento máximo permitido.
+ * 5. Inicializa uma nova tabela com o nome fornecido pelo usuário.
+ * 6. Solicita ao usuário o nome da coluna de ID.
+ * 7. Verifica se o usuário digitou 'q' ou 'Q' para abortar a operação. Se sim, retorna.
+ * 8. Valida a entrada do usuário para garantir que o nome da coluna de ID não esteja vazio e não exceda o comprimento máximo permitido.
+ * 9. Define a primeira coluna da nova tabela como a coluna de ID.
+ * 10. Solicita ao usuário o número de colunas adicionais.
+ * 11. Valida a entrada do usuário para garantir que o número de colunas esteja dentro do intervalo permitido.
+ * 12. Para cada coluna adicional, solicita ao usuário o nome e o tipo da coluna e adiciona a coluna à nova tabela.
+ * 13. Define a coluna de ID como a primeira coluna da nova tabela.
+ * 14. Adiciona a nova tabela ao array de tabelas e incrementa o contador de tabelas.
+ */
+
+/**
+ * Função: listTables
+ * ------------------
+ * Lista todas as tabelas no banco de dados.
+ *
+ * A função segue os seguintes passos:
+ * 1. Para cada tabela no banco de dados, imprime o nome da tabela.
+ */
+
+/**
+ * Função: deleteTable
+ * -------------------
+ * Deleta uma tabela do banco de dados.
+ *
+ * A função segue os seguintes passos:
+ * 1. Solicita ao usuário o nome da tabela a ser deletada.
+ * 2. Verifica se o usuário digitou 'q' ou 'Q' para abortar a operação. Se sim, retorna.
+ * 3. Procura a tabela no array de tabelas.
+ * 4. Se a tabela não for encontrada, sugere um nome de tabela com base na entrada do usuário e pergunta ao usuário se ele gostaria de deletar a tabela sugerida.
+ * 5. Se o usuário aceitar a sugestão, encontra o índice da tabela sugerida.
+ * 6. Se a tabela ainda não for encontrada, retorna.
+ * 7. Remove a tabela do array de tabelas e decrementa o contador de tabelas.
+ * 8. Verifica se a tabela foi removida com sucesso. Se não, imprime uma mensagem de erro e retorna.
+ * 9. Imprime uma mensagem informando que a tabela foi removida com sucesso.
+ */
+
 /** Patch Notes (28/11/2023 -- Dio):
  * - Troquei a formatação de snake_case para camelCase
  * - Apaguei a versão anterior para poder recomeçar de maneira melhor
+ */
+
+/** Patch Notes (01/12/2023 ~ Dio):
+ * - Criada as funções de manipular tabelas
+ *   · createTable()
+ *   · listTables()
+ *   · deleteTable()
  */
