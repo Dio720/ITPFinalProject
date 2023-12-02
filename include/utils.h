@@ -6,12 +6,14 @@
 #define PROJETO_FINAL_ITP_UTILS_H
 
 #include <stdio.h>
+#include <stdbool.h>
 
 int readInteger();
 float readFloat();
 double readDouble();
-void removeNewline(char *string);
+void removeNewLine(char *string);
 int calculateStringSimilarity(const char *string1, const char *string2); // Calcula a distância de Levenshtein entre duas strings
+char* suggestName(const char *name, const char *names[], int numNames);
 
 #endif // PROJETO_FINAL_ITP_UTILS_H
 
@@ -25,4 +27,8 @@ int calculateStringSimilarity(const char *string1, const char *string2); // Calc
  * - Troquei nome das funções e variáveis para inglês.
  * - Além de mudar o nome da levenshtein, re-aproveitei uma versão antiga que eu tinha desse algoritmo.
  * - Adicionei uma função para retornar o minimo entre dois inteiros.
+ */
+
+/** Hotfix (01/12/2023):
+ * Correções pontuais.
  */
