@@ -100,8 +100,82 @@ void listTables() {
     }
 }
 
-void deleteTable(const char *filename) {
-    // Função para deletar uma tabela do arquivo? ou carregar ele primeiro?
+void deleteTable() {
+    printf("Digite o nome da tabela a ser deletada: ");
+    char tableName[MAX_NAME_LENGTH];
+    if (!fgets(tableName, MAX_NAME_LENGTH, stdin)) {
+        fprintf(stderr, "Erro ao ler o nome da tabela.\n");
+        return;
+    }
+    removeNewLine(tableName);
+
+    int tableIndex = -1;
+    for (int i = 0; i < numTables; i++) {
+        if (strcmp(tables[i].name, tableName) == 0) {
+            tableIndex = i;
+            break;
+        }
+    }
+
+    if (tableIndex == -1) {
+        printf("Tabela '%s' não encontrada.\n", tableName);
+        const char *tableNames[MAX_TABLES];
+        for (int i = 0; i < numTables; i++) {
+            tableNames[i] = tables[i].name;
+        }
+        char *suggestedName = suggestName(tableName, tableNames, numTables);
+        if (suggestedName != NULL) {
+            printf("Você quis dizer %s? (s/n)\n", suggestedName);
+            char response[3];
+            if (!fgets(response, 3, stdin)) {
+                fprintf(stderr, "Erro ao ler a resposta.\n");
+                free(suggestedName);
+                return;
+            }
+            removeNewLine(response);
+            while (strcmp(response, "s") != 0 && strcmp(response, "S") != 0 && strcmp(response, "n") != 0 && strcmp(response, "N") != 0 && strcmp(response, "q") != 0 && strcmp(response, "Q") != 0) {
+                printf("Entrada inválida. Digite 's' para sim, 'n' para não ou 'q' para sair: ");
+                if (!fgets(response, 3, stdin)) {
+                    fprintf(stderr, "Erro ao ler a resposta.\n");
+                    free(suggestedName);
+                    return;
+                }
+                removeNewLine(response);
+            }
+            if (strcmp(response, "q") == 0 || strcmp(response, "Q") == 0) {
+                free(suggestedName);
+                return;
+            }
+            if (strcmp(response, "s") == 0 || strcmp(response, "S") == 0) {
+                for (int i = 0; i < numTables; i++) {
+                    if (strcmp(tables[i].name, suggestedName) == 0) {
+                        tableIndex = i;
+                        break;
+                    }
+                }
+            }
+            free(suggestedName);
+        }
+        if (tableIndex == -1) {
+            return;
+        }
+    }
+
+    for (int i = tableIndex; i < numTables - 1; i++) {
+        tables[i] = tables[i + 1];
+    }
+
+    numTables--;
+
+    // Verificar se a tabela foi removida com sucesso
+    for (int i = 0; i < numTables; i++) {
+        if (strcmp(tables[i].name, tableName) == 0) {
+            fprintf(stderr, "Erro: Falha ao remover a tabela '%s'.\n", tableName);
+            return;
+        }
+    }
+
+    printf("A tabela '%s' foi removida com sucesso.\n", tableName);
 }
 
 /** Patch Notes (28/11/2023 -- Dio):
