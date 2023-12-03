@@ -11,8 +11,11 @@ int readInteger();                                                 // Lê um int
 float readFloat();                                                 // Lê um float do usuário
 double readDouble();                                               // Lê um double do usuário
 void removeNewline(char *str);                                     // Remove o \n do final de uma string
-int levenshteinDistance(const char *string1, const char *string2); // Calcula a distância de Levenshtein entre duas strings
+char* sugerirNome(const char *nomeErrado, const char **nomesExistentes, int numNomes); // Calcula a distância de Levenshtein entre duas strings e sugere um nome
 
 #endif // PROJETO_FINAL_ITP_UTILS_H
 
-// úlitma atualização 2023-11-26 -- dio
+// úlitma atualização 2023-11-30 -- schwaad
+/*
+*  - só fiz mudar a "levenshteinDistance" pra "sugerirNome" que foram as alterações feitas no utils.c
+*/

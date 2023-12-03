@@ -1,5 +1,13 @@
+# Patch Notes (30/11/2023 ~ schwaad)
+## Mudanças gerais:
+* Mudei um pouco a ideia da implementação da `createRow` no arquivo `data.c`
+
+# Mudanças no código
+* Comecei a implementar a `createRow` mas sem sucesso ☹ acredito que seja melhor focar em funções mais básicas como `createTable`
+* Também alterei o nome da `levenshteinDistance` no `utils.h` pra `sugerirNome`,  que é a nova função que eu criei.
+
 # Patch Notes (29/11/2023 ~ schwaad)
-# Mudanças gerais:
+## Mudanças gerais:
 * Mudei o nome da delete_data() do data.c pra `camelCase`
 
 # Mudanças no código:
