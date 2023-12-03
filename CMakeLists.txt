@@ -1,33 +1,26 @@
-# Especifica a versão mínima do CMake necessária para compilar este projeto.
 cmake_minimum_required(VERSION 3.26)
 
-# Define o nome do projeto e a linguagem de programação usada.
 project(ITPFinalProject C)
 
-# Define o padrão da linguagem C a ser usado para compilar os arquivos de origem.
 set(CMAKE_C_STANDARD 11)
 
-# Cria uma biblioteca chamada 'mylib' com os arquivos de origem especificados.
-add_library(mylib
-        src/file_operations.c
-        src/database.c
-        src/utils_file_operations.c
-        src/data.c
-        src/table.c
-        src/utils.c
-)
+# Incluindo os diretórios de cabeçalho
+include_directories(include)
+include_directories(unitTests/includeTests)
 
-# Adiciona o diretório 'include' ao caminho de inclusão para a biblioteca 'mylib'.
-target_include_directories(mylib PUBLIC include)
+# Especificando os arquivos fonte para mylib
+file(GLOB_RECURSE MYLIB_SOURCES "src/*.c" "include/*.h")
+add_library(mylib ${MYLIB_SOURCES})
 
-# Cria um executável chamado 'main' com o arquivo de origem especificado.
+# Especificando os arquivos fonte para testlib
+file(GLOB_RECURSE TESTLIB_SOURCES "unitTests/srcTests/*.c" "unitTests/includeTests/*.h")
+add_library(testlib ${TESTLIB_SOURCES})
+
+# Criando o executável principal
 add_executable(main src/main.c)
-
-# Vincula a biblioteca 'mylib' ao executável 'main'.
 target_link_libraries(main mylib)
 
-# Cria um executável chamado 'tests' com o arquivo de origem especificado.
-add_executable(tests src/tests.c)
+# Criando o executável de testes
+add_executable(tests unitTests/tests.c)
 
-# Vincula as bibliotecas 'mylib' e 'cunit' ao executável 'tests'.
-target_link_libraries(tests mylib cunit)
+target_link_libraries(tests testlib mylib cunit)

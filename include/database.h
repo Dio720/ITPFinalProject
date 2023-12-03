@@ -10,7 +10,7 @@
 #define MAX_NAME_LENGTH 50
 #define MAX_COLUMNS 10
 #define MAX_CELL_LENGTH 100
-#define MAX_LINE_LENGTH 100
+#define MAX_LINE_LENGTH 1009
 
 typedef enum {
     EMPTY,
@@ -52,8 +52,8 @@ typedef struct {
     Row rows[MAX_ROWS];
 } Table;
 
-void initDatabase(); // Função para inicializar o banco de dados
-void initCellAsEmpty(Cell *cell); // Função para inicializar uma célula como vazia
+void initDatabase();
+void initCellAsEmpty(Cell *cell);
 
 #endif // PROJETO_FINAL_ITP_DATABASE_H
 
@@ -62,4 +62,8 @@ void initCellAsEmpty(Cell *cell); // Função para inicializar uma célula como 
  * - Documentação das funções.
  * - InitDatabase agora é uma função que inicializa o banco de dados com todos os valores vazios.
  * - InitCellAsEmpty agora é uma função que inicializa uma célula como vazia.
+ */
+
+/** Hotfix (01/12/23):
+ * - Aumentei o tamanho máximo de uma linha para 1009 caracteres, porque é o tamanho máximo em tese que poderia ter.
  */

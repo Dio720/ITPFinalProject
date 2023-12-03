@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 char *processTable(char *line);                                                // Processa uma linha de entrada que representa uma tabela
-bool convertStringToCell(const char *string, Cell *cell, DataType columnType); // Converte uma string para uma célula
+bool convertStringToCell(const char *string, Cell *cell, DataType columnType);
 char *processRows(char *line, Table *table);                                   // Processa uma linha de entrada que representa uma linha
 
 #endif // PROJETO_FINAL_ITP_UTILS_FILE_OPERATIONS_H

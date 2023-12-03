@@ -5,10 +5,10 @@
 #ifndef PROJETO_FINAL_ITP_DATA_H
 #define PROJETO_FINAL_ITP_DATA_H
 
-void createRow();   // Cria uma nova linha na tabela
+void createRow();
 void listData();    // Lista os dados de uma tabela em formato CSV
-void delete_data(); // Deleta uma linha da tabela
-void searchData(); // Procura por uma linha na tabela
+void delete_data();
+void searchData();
 
 #endif // PROJETO_FINAL_ITP_DATA_H
 
