@@ -5,42 +5,38 @@
 #include "fileOperations.h"
 #include "utilsFileOperations.h"
 #include "database.h"
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-extern Table tables[10];
+extern Table tables[MAX_TABLES];
 extern int numTables;
 
-char *readFile(const char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (!file) {
-        fprintf(stderr, "Erro ao abrir o arquivo %s\n", filename);
+char* readFileName() {
+    char* filename = (char*) malloc(MAX_NAME_LENGTH * sizeof(char));
+    if (filename == NULL) {
+        printf("Erro ao alocar memória para o nome do arquivo.\n");
         return NULL;
     }
 
-    fseek(file, 0, SEEK_END);
-    long fsize = ftell(file);
-    fseek(file, 0, SEEK_SET);
+    while (1) {
+        printf("Digite o nome do arquivo (ou 'q' para voltar): ");
+        readString(filename, MAX_NAME_LENGTH);
 
-    if (fsize == 0) {
-        fprintf(stderr, "Arquivo vazio\n");
-        fclose(file);
-        return NULL;
+        if (strcmp(filename, "q") == 0 || strcmp(filename, "Q") == 0) {
+            free(filename);
+            return NULL;
+        }
+
+        if (isValidFileName(filename)) {
+            break;
+        } else {
+            printf("Nome de arquivo inválido. Tente novamente.\n");
+        }
     }
 
-    char *string = malloc(fsize + 1);
-    if (!string) {
-        fprintf(stderr, "Falha ao alocar memória\n");
-        fclose(file);
-        return NULL;
-    }
-
-    fread(string, 1, fsize, file);
-    fclose(file);
-
-    string[fsize] = '\0';
-    return string;
+    return filename;
 }
 
 void processFileContent(char *fileContent) {
@@ -67,7 +63,7 @@ bool saveDatabaseToFile(const char *filename) {
         return false;
     }
 
-    for (int i = 0; i < MAX_TABLES; i++) {
+    for (int i = 0; i < numTables; i++) {
         Table *table = &tables[i];
         if (strlen(table->name) == 0) continue;
 
@@ -112,77 +108,110 @@ bool saveDatabaseToFile(const char *filename) {
     return true;
 }
 
+bool loadFile(char* filename) {
+    initDatabase();
+
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Erro: O arquivo %s não pôde ser aberto. Verifique se o arquivo existe e se você tem permissão para lê-lo.\n", filename);
+        return false;
+    }
+
+    fseek(file, 0, SEEK_END);
+    long fsize = ftell(file);
+    if (fsize == 0) {
+        printf("Erro: O arquivo %s está vazio.\n", filename);
+        fclose(file);
+        return false;
+    }
+    fseek(file, 0, SEEK_SET);
+
+    char *fileContent = malloc(fsize + 1);
+    if (fileContent == NULL) {
+        printf("Erro: Não foi possível alocar memória para ler o arquivo %s.\n", filename);
+        fclose(file);
+        return false;
+    }
+
+    fread(fileContent, 1, fsize, file);
+    fclose(file);
+
+    fileContent[fsize] = '\0';
+
+    processFileContent(fileContent);
+    free(fileContent);
+    printf("Arquivo %s carregado com sucesso.\n", filename);
+    return true;
+}
+
+
 /**
- * Função: readFile
- * -----------------
- * Lê o conteúdo de um arquivo e retorna esse conteúdo como uma string.
+ * Função: readFileName
+ * --------------------
+ * Solicita ao usuário o nome do arquivo.
  *
- * @param filename: O nome do arquivo a ser lido.
- *Arquivo de testes para file_operations.c
- * @return: Uma string contendo o conteúdo do arquivo. Se ocorrer um erro ao
- * abrir o arquivo ou alocar memória para a string, a função retorna NULL e
- * imprime uma mensagem de erro na saída de erro padrão.
+ * A função segue os seguintes passos:
+ * 1. Aloca memória para armazenar o nome do arquivo.
+ * 2. Entra em um loop onde solicita ao usuário que digite o nome do arquivo.
+ * 3. Verifica se o usuário quer sair. Se sim, libera a memória alocada para o nome do arquivo e retorna NULL.
+ * 4. Verifica se o nome do arquivo é válido. Se for, quebra o loop.
+ * 5. Se o nome do arquivo não for válido, imprime uma mensagem de erro e continua o loop.
  *
- * O processo de leitura do arquivo é o seguinte:
- * 1. Abre o arquivo no modo de leitura.
- * 2. Se o arquivo não puder ser aberto, imprime uma mensagem de erro e retorna
- * NULL.
- * 3. Move o ponteiro de arquivo para o final do arquivo para determinar o
- * tamanho do arquivo.
- * 4. Aloca memória para uma string que pode conter o conteúdo do arquivo.
- * 5. Se a memória não puder ser alocada, imprime uma mensagem de erro, fecha o
- * arquivo e retorna NULL.
- * 6. Move o ponteiro de arquivo de volta para o início do arquivo.
- * 7. Lê o conteúdo do arquivo para a string.
- * 8. Fecha o arquivo.
- * 9. Adiciona um caractere nulo ao final da string para garantir que ela seja
- * uma string válida em C.
- * 10. Retorna a string.
+ * @return: O nome do arquivo, ou NULL se o usuário decidir sair.
  */
 
 /**
  * Função: processFileContent
- * ---------------------------
- * Processa o conteúdo de um arquivo que foi lido para uma string.
+ * --------------------------
+ * Processa o conteúdo de um arquivo.
  *
  * A função segue os seguintes passos:
- * 1. Define a posição atual como o início da string.
- * 2. Enquanto a posição atual não for nula e não for o final da string:
- *    - Chama a função processTable com a posição atual para processar a tabela
- * atual.
- *    - Se a função processTable retornar NULL, retorna da função
- * processFileContent.
- *    - Avança a posição atual para a próxima tabela na string.
- * 3. Continua esse processo até que todas as tabelas na string tenham sido
- * processadas.
+ * 1. Define a posição atual como o início do conteúdo do arquivo.
+ * 2. Entra em um loop onde processa cada tabela no conteúdo do arquivo.
+ * 3. Chama a função processTable para processar a tabela atual.
+ * 4. Avança a posição atual para a próxima tabela.
+ * 5. Continua o loop até que todas as tabelas tenham sido processadas.
  *
- * @param fileContent: A string contendo o conteúdo do arquivo a ser processado.
- * @return: void
+ * @param fileContent: O conteúdo do arquivo a ser processado.
  */
 
 /**
  * Função: saveDatabaseToFile
- * ---------------------------
- * Salva o banco de dados atual em um arquivo.
- *
- * @param filename: O nome do arquivo onde o banco de dados será salvo.
- * @return: Um valor booleano indicando se a operação foi bem-sucedida. Retorna
- * true se o banco de dados foi salvo com sucesso e false se ocorreu um erro ao
- * abrir o arquivo para escrita.
+ * --------------------------
+ * Salva o banco de dados em um arquivo.
  *
  * A função segue os seguintes passos:
- * 1. Abre o arquivo no modo de escrita.
- * 2. Se o arquivo não puder ser aberto, imprime uma mensagem de erro e retorna
- * false.
- * 3. Para cada tabela no banco de dados:
- *    - Se o nome da tabela estiver vazio, pula a tabela.
- *    - Escreve os detalhes da tabela no arquivo, incluindo o nome da tabela, o
- * número de colunas e o número de linhas.
- *    - Para cada coluna na tabela, escreve os detalhes da coluna no arquivo,
- * incluindo o nome da coluna e o tipo de dados.
- *    - Para cada linha na tabela, escreve os valores das células no arquivo.
- * 4. Fecha o arquivo.
- * 5. Retorna true para indicar que o banco de dados foi salvo com sucesso.
+ * 1. Abre o arquivo para escrita.
+ * 2. Verifica se o arquivo foi aberto com sucesso. Se não, imprime uma mensagem de erro e retorna false.
+ * 3. Percorre cada tabela no banco de dados.
+ * 4. Para cada tabela, imprime os detalhes da tabela e os dados de cada coluna e linha no arquivo.
+ * 5. Fecha o arquivo.
+ * 6. Retorna true para indicar que o banco de dados foi salvo com sucesso.
+ *
+ * @param filename: O nome do arquivo onde o banco de dados será salvo.
+ * @return: Um valor booleano indicando se o banco de dados foi salvo com sucesso.
+ */
+
+/**
+ * Função: loadFile
+ * ----------------
+ * Carrega um arquivo para o banco de dados.
+ *
+ * A função segue os seguintes passos:
+ * 1. Inicializa o banco de dados.
+ * 2. Abre o arquivo para leitura.
+ * 3. Verifica se o arquivo foi aberto com sucesso. Se não, imprime uma mensagem de erro e retorna false.
+ * 4. Verifica se o arquivo está vazio. Se sim, imprime uma mensagem de erro e retorna false.
+ * 5. Aloca memória para armazenar o conteúdo do arquivo.
+ * 6. Lê o conteúdo do arquivo para a memória.
+ * 7. Fecha o arquivo.
+ * 8. Chama a função processFileContent para processar o conteúdo do arquivo.
+ * 9. Libera a memória alocada para o conteúdo do arquivo.
+ * 10. Imprime uma mensagem informando que o arquivo foi carregado com sucesso.
+ * 11. Retorna true para indicar que o arquivo foi carregado com sucesso.
+ *
+ * @param filename: O nome do arquivo a ser carregado.
+ * @return: Um valor booleano indicando se o arquivo foi carregado com sucesso.
  */
 
 /** Patch Notes (28/11/2023 -- Dio):
@@ -192,4 +221,9 @@ bool saveDatabaseToFile(const char *filename) {
 
 /** Patch Notes (30/11/2023 -- Dio):
  * - Adicionei a função saveDatabaseToFile() para salvar o banco de dados em um arquivo
+ */
+
+/** Patch Notes (03/12/2023 ~ Dio):
+ * - Deleção da readFile
+ * - Criação da loadFile
  */
