@@ -20,9 +20,26 @@ double readDouble() {
     if (endptr != string && *endptr == '\n')
         return output;
     else {
-        fprintf(stderr,"Erro: A string precisa ser do tipo float ou double.\n");
+        fprintf(stderr,"Erro: A string precisa ser do tipo double.\n");
         return readDouble();
     }
+}
+
+float readFloat() {
+    char string[50];
+    char *endptr;
+
+    fgets(string, 50, stdin);
+
+    float output = strtof(string, &endptr);
+
+    if (endptr != string && *endptr == '\n')
+        return output;
+    else {
+        fprintf(stderr,"Erro: A string precisa ser do tipo float.\n");
+        return readFloat();
+    }
+
 }
 
 int readInteger() {
@@ -49,6 +66,25 @@ void removeNewLine(char *string) {
     if (len > 0 && string[len - 1] == '\n') {
         string[len - 1] = '\0';
     }
+}
+
+
+char readChar() {
+    char input[50];
+
+    fgets(input, 50, stdin);
+
+    if (strlen(input) == 2 && input[1] == '\n') {
+        return input[0];
+    } else {
+        fprintf(stderr,"Erro: A entrada precisa ser do tipo char.\n");
+        return readChar();
+    }
+}
+
+void readString(char *string, int maxLength) {
+    fgets(string, maxLength, stdin);
+    removeNewLine(string);
 }
 
 int minimumOfTwo(int x, int y) {
@@ -96,15 +132,6 @@ int calculateStringSimilarity(const char *string1, const char *string2) {
     return result;
 }
 
-/* TODO:
- * Esta função precisa de algumas correções que serão feitas após a implementação das funções de manipulação de arquivos.
- * Aqui estão algumas instruções para uma melhor implementação posteriormente:
- * - Para a função funcionar, ela precisa receber o nome inserido, o array de todos os nomes (precisa ser montado) e a quantidade de nomes (precisa ser calculada fora da função).
- * Ou seja, em um contexto de nome de tabelas, será necessário montar um array com o nome de todas as tabelas para servir de fonte de comparação. No mesmo momento que montar esse
- * array, já calcula o tamanho dele!! Essas coisas podem ser feitas talvez até dentro da função, mas ainda precisamos ver quando implementar melhor. Como é qualidade de vida
- * apenas, não precisa se preocupar tanto por agora.
- * Mas tipo, a função está funcionando, eu testei já e está tudo certo.
- */
 char* suggestName(const char *incorrectName, const char **existingNames, int numNames) {
     int bestDistance = -1;
     const char *bestSuggestion = NULL;
@@ -141,6 +168,47 @@ char* suggestName(const char *incorrectName, const char **existingNames, int num
  * 4. Retorna o valor double convertido.
  *
  * @return: O valor double lido do usuário.
+ */
+
+/**
+ * Função: readFloat
+ * ------------------
+ * Lê um valor float do usuário.
+ *
+ * A função segue os seguintes passos:
+ * 1. Lê uma string do usuário.
+ * 2. Converte a string para um valor float.
+ * 3. Verifica se a conversão foi bem-sucedida. Se não foi, imprime uma mensagem de erro e chama a si mesma recursivamente.
+ * 4. Retorna o valor float convertido.
+ *
+ * @return: O valor float lido do usuário.
+ */
+
+/**
+ * Função: readChar
+ * ----------------
+ * Lê um caractere do usuário.
+ *
+ * A função segue os seguintes passos:
+ * 1. Lê uma string do usuário.
+ * 2. Verifica se a string contém exatamente um caractere. Se não, imprime uma mensagem de erro e chama a si mesma recursivamente.
+ * 3. Retorna o caractere lido.
+ *
+ * @return: O caractere lido do usuário.
+ */
+
+/**
+ * Função: readString
+ * ------------------
+ * Lê uma string do usuário.
+ *
+ * A função segue os seguintes passos:
+ * 1. Lê uma string do usuário.
+ * 2. Remove o caractere de nova linha do final da string, se houver.
+ * 3. Retorna a string lida.
+ *
+ * @param string: O ponteiro para a string onde a entrada do usuário será armazenada.
+ * @param maxLength: O número máximo de caracteres a serem lidos.
  */
 
 /**
@@ -229,4 +297,10 @@ char* suggestName(const char *incorrectName, const char **existingNames, int num
  * - Troquei nome das funções e variáveis para inglês.
  * - Além de mudar o nome da levenshtein, re-aproveitei uma versão antiga que eu tinha desse algoritmo.
  * - Adicionei uma função para retornar o minimo entre dois inteiros.
+ */
+
+/** Patch Notes (03/12/2023 ~ Dio):
+ * - Adicionada a readFloat
+ * - Adicionada a readChar
+ * - Troca de chamda da readString
  */
