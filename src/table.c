@@ -19,6 +19,7 @@ void createTableLogic(Table newTable) {
         return;
     }
     tables[numTables] = newTable;
+    numTables++;
     if (previousNumTables < numTables) {
         printf("A tabela '%s' foi criada com sucesso.\n", newTable.name);
     } else {
