@@ -8,9 +8,11 @@
 #include "database.h"
 #include <stdbool.h>
 
+void createTableLogic(Table newTable);
+void deleteTableLogic(char* tableName);
 void createTable();
 void listTables();
-void deleteTable();
+void listTableData(char* tableName);
 
 #endif // PROJETO_FINAL_ITP_TABLE_H
 
@@ -22,4 +24,10 @@ void deleteTable();
 /** Patch Notes (01/12/2023 ~ Dio):
  * Implementei as funções desse arquivo.
  * Troquei as chamadas previamente estabelecidas
+ */
+
+/** Patch Notes (03/12/2023 ~ Dio):
+ * Adicionei a createTableLogic
+ * Adicionei a deleteTableLogic
+ * Adicionei a listTableData
  */
