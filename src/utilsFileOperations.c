@@ -3,7 +3,6 @@
 //
 
 #include "database.h"
-#include "fileOperations.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,8 +11,6 @@
 extern Table tables[MAX_TABLES];
 extern int numTables;
 
-// TODO: Melhorar a verificação de erros
-// TODO: Garantir a unicidade da chave primária
 
 bool convertStringToCell(const char *string, Cell *cell, DataType columnType) {
     if (string == NULL || cell == NULL) {
