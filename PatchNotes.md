@@ -1,3 +1,60 @@
+# Patch Notes (03/12/2023 ~ Dio) v01 - PRIMEIRA VERSÃO FUNCIONAL!
+
+
+
+
+## Mudanças Gerais:
+
+* Implementada a primeira interface do nosso programa.
+* Chamada das funções de manipulação de arquivo e de tabela e linhas na main.
+* Criação de mais funções auxiliares de maneira geral.
+* Apaguei o `data.c / data.h` e suas funções.
+* Adicionado os arquivos e suas respectivas funções::
+  * `row.c / row.h`
+  * `userInteraction.c / userInteraction.h`
+  * `utilsTable.c / utilsTable.h`
+* Tanta euforia que não consigo nem lembrar direito o que eu fiz esse fim de semana.
+
+### Mudanças no código:
+
+* `fileOperations.c / fileOperations.h`:
+  * Remoção da `readFile()`.
+  * Criação da `loadFile()`.
+
+* `utilsFileOperations.c / utilsFileOperations.h`:
+  * Criação da `isValidFileName()`.
+  * Correção de bugs.
+
+* `table.c / table.h`:
+  * Adicionei algumas funções para lidar com a lógica por trás da adição ao banco de dados.
+      * Criação da `createTableLogic()`.
+      * Criação da `deleteTableLogic()`.
+  * Criação da `listTableData()` para imprimir os dados da tabela em formato de adivinha o que.
+
+* `utils.c / utils.h`:
+  * Adicionada a `readFloat()`.
+  * Adicionada a `readChar()`.
+  * Troca de chamada da `readString()`.
+
+### Mudanças no `CMake`:
+
+* Removida as bibliotecas de teste e seus executáveis.
+
+### Hotfixes:
+
+* Correção de bugs e melhorias pontuais nas operações de manipulação de arquivo.
+
+### TODOs:
+
+* [ ] Possíveis melhorias de qualidade de vida do usuário.
+* [ ] Adicionar as funções que pesquisam um valor numa tabela.
+* [ ] Implementar um melhor tratamento de erros nas funções relacionadas ao processamento de arquivo. (não será necessário provavelmente)
+* [x] Melhorias nas operações de manipulação de arquivo.
+* [x] Criar as funções de manipulação de tabela.
+* [x] Criar as funções de manipulação de linha e de células.
+* [x] Levar em consideração a informação armazenada na coluna ID ao processar o arquivo.
+* [x] Estruturar uma interface na `main.c` para o usuário.
+
 # Patch Notes (01/12/2023 ~ Dio)
 
 ## Mudaças Gerais:
