@@ -77,6 +77,11 @@ char *processRows(char *line, Table *table) {
             } else {
                 initCellAsEmpty(&table->rows[i].cells[j]);
             }
+
+            // Adicionado para armazenar o ID da linha
+            if (j == 0) {
+                table->rows[i].id = atoi(cellValue);
+            }
         }
 
         line = strchr(line, '\n');
@@ -127,6 +132,16 @@ char *processTable(char *line) {
     char *startOfNextTable = strstr(line, "Tabela");
 
     return startOfNextTable;
+}
+
+bool isValidFileName(char* filename) {
+    char invalidChars[] = "<>:\"/\\|?*"; // Caracteres inválidos para nomes de arquivos na maioria dos sistemas de arquivos
+    for (int i = 0; i < strlen(filename); i++) {
+        if (strchr(invalidChars, filename[i]) != NULL) {
+            return false; // O nome do arquivo contém um caractere inválido
+        }
+    }
+    return true; // O nome do arquivo é válido
 }
 
 /**
@@ -206,4 +221,9 @@ char *processTable(char *line) {
  * - Adicionada a função convertStringToCell para processar o valor de uma célula da linha
  * - Adicionada a função processRows para processar as linhas de uma tabela
  * - Adicionada a função processTable para processar uma tabela
+ */
+
+/** Patch Notes (03/12/203 ~ Dio):
+ * - Agora a chave primária das linhas são armazenadas corretamente
+ * - Adicionada a isValidFileName
  */

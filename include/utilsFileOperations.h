@@ -9,9 +9,10 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-char *processTable(char *line);                                                // Processa uma linha de entrada que representa uma tabela
+char *processTable(char *line);
 bool convertStringToCell(const char *string, Cell *cell, DataType columnType);
-char *processRows(char *line, Table *table);                                   // Processa uma linha de entrada que representa uma linha
+char *processRows(char *line, Table *table);
+bool isValidFileName(char* filename);
 
 #endif // PROJETO_FINAL_ITP_UTILS_FILE_OPERATIONS_H
 
@@ -20,4 +21,9 @@ char *processRows(char *line, Table *table);                                   /
  * - Adicionada a função convertStringToCell para processar o valor de uma célula da linha
  * - Adicionada a função processRows para processar as linhas de uma tabela
  * - Adicionada a função processTable para processar uma tabela
+ */
+
+/** Patch Notes (03/12/203 ~ Dio):
+ * - Agora a chave primária das linhas são armazenadas corretamente
+ * - Adicionada a isValidFileName
  */
