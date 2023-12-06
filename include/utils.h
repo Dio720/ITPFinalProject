@@ -11,6 +11,8 @@
 int readInteger();
 float readFloat();
 double readDouble();
+char readChar();
+void readString(char *string, int maxLength);
 void removeNewLine(char *string);
 int calculateStringSimilarity(const char *string1, const char *string2); // Calcula a distância de Levenshtein entre duas strings
 char* suggestName(const char *name, const char *names[], int numNames);
@@ -31,4 +33,11 @@ char* suggestName(const char *name, const char *names[], int numNames);
 
 /** Hotfix (01/12/2023):
  * Correções pontuais.
+ */
+
+
+/** Patch Notes (03/12/2023 ~ Dio):
+ * - Adicionada a readFloat
+ * - Adicionada a readChar
+ * - Troca de chamda da readString
  */

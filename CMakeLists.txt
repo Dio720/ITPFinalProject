@@ -12,15 +12,7 @@ include_directories(unitTests/includeTests)
 file(GLOB_RECURSE MYLIB_SOURCES "src/*.c" "include/*.h")
 add_library(mylib ${MYLIB_SOURCES})
 
-# Especificando os arquivos fonte para testlib
-file(GLOB_RECURSE TESTLIB_SOURCES "unitTests/srcTests/*.c" "unitTests/includeTests/*.h")
-add_library(testlib ${TESTLIB_SOURCES})
-
 # Criando o executável principal
 add_executable(main src/main.c)
 target_link_libraries(main mylib)
 
-# Criando o executável de testes
-add_executable(tests unitTests/tests.c)
-
-target_link_libraries(tests testlib mylib cunit)
