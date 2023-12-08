@@ -3,17 +3,14 @@
 //
 
 #include "database.h"
-#include "file_operations.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 extern Table tables[MAX_TABLES];
-extern int num_tables;
+extern int numTables;
 
-// TODO: Melhorar a verificação de erros
-// TODO: Garantir a unicidade da chave primária
 
 bool convertStringToCell(const char *string, Cell *cell, DataType columnType) {
     if (string == NULL || cell == NULL) {
@@ -77,6 +74,11 @@ char *processRows(char *line, Table *table) {
             } else {
                 initCellAsEmpty(&table->rows[i].cells[j]);
             }
+
+            // Adicionado para armazenar o ID da linha
+            if (j == 0) {
+                table->rows[i].id = atoi(cellValue);
+            }
         }
 
         line = strchr(line, '\n');
@@ -90,10 +92,7 @@ char *processTable(char *line) {
     char tableName[MAX_NAME_LENGTH];
     unsigned int numColumns, numRows;
 
-    sscanf(line,
-           "Tabela %*d: \"%49[^\"]\", Quantidade de colunas: %u, Quantidade de "
-           "Linhas: %u",
-           tableName, &numColumns, &numRows);
+    sscanf(line,"Tabela %*d: \"%49[^\"]\", Quantidade de colunas: %u, Quantidade de linhas: %u", tableName, &numColumns, &numRows);
 
     Table newTable = {0};
     strcpy(newTable.name, tableName);
@@ -124,15 +123,22 @@ char *processTable(char *line) {
     }
 
     line = processRows(line, &newTable);
-    if (line == NULL) {
-        fprintf(stderr, "Erro: Falha ao processar linhas\n");
-        return NULL;
-    }
+    tables[numTables++] = newTable;
 
+    if (line == NULL) return NULL;
     char *startOfNextTable = strstr(line, "Tabela");
-    tables[num_tables++] = newTable;
 
     return startOfNextTable;
+}
+
+bool isValidFileName(char* filename) {
+    char invalidChars[] = "<>:\"/\\|?*"; // Caracteres inválidos para nomes de arquivos na maioria dos sistemas de arquivos
+    for (int i = 0; i < strlen(filename); i++) {
+        if (strchr(invalidChars, filename[i]) != NULL) {
+            return false; // O nome do arquivo contém um caractere inválido
+        }
+    }
+    return true; // O nome do arquivo é válido
 }
 
 /**
@@ -146,7 +152,7 @@ char *processTable(char *line) {
  * 2. Limpa a memória da célula para garantir que ela esteja vazia.
  * 3. Usa um switch para verificar o tipo da coluna. Dependendo do tipo da
  * coluna, a função converte a string para o tipo correspondente e armazena o
- * valor na célula. Se o tipo da coluna for EMPTY, a função define o tipo da
+ * valor na célula.  Apesar de nunca ser, se o tipo da coluna for EMPTY, a função define o tipo da
  * célula como EMPTY e o valor como '\0'.
  * 4. Retorna true para indicar que a conversão foi bem-sucedida.
  *
@@ -212,4 +218,9 @@ char *processTable(char *line) {
  * - Adicionada a função convertStringToCell para processar o valor de uma célula da linha
  * - Adicionada a função processRows para processar as linhas de uma tabela
  * - Adicionada a função processTable para processar uma tabela
+ */
+
+/** Patch Notes (03/12/203 ~ Dio):
+ * - Agora a chave primária das linhas são armazenadas corretamente
+ * - Adicionada a isValidFileName
  */

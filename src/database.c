@@ -3,12 +3,11 @@
 //
 
 #include "database.h"
-#include "utils_file_operations.h"
+#include "utilsFileOperations.h"
 #include <string.h>
 
-Table tables[MAX_TABLES] = {0}; // Ajustar de acordo com o número máximo de
-// tabelas ou alocar dinâmicamente
-int num_tables = 0;
+Table tables[MAX_TABLES] = {0};
+int numTables = 0;
 
 void initDatabase() {
     for (int i = 0; i < MAX_TABLES; i++) {
@@ -27,7 +26,7 @@ void initDatabase() {
             }
         }
     }
-    num_tables = 0;
+    numTables = 0;
 }
 
 void initCellAsEmpty(Cell *cell) {
