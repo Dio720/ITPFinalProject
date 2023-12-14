@@ -235,6 +235,116 @@ int valueExistsInColumn(Table table, Column column, Cell cells[], int numRows, v
     return 0; 
 }
 
+void valueNotFound(void *value, Table table, Column column) {
+    int counterGreaterThan = 0;
+    int counterLessThan = 0;
+    int columnIndex = findColumnIndex(tables, column.name);
+    char **nameArray[table.numRows];
+
+    if (column.type == INT || column.type == FLOAT || column.type == DOUBLE) {
+        for (int i = 0; i < table.numRows; i++) {
+            switch (column.type) {
+                case INT:
+                    if (table.rows[i].cells[columnIndex].value.intValue > *((int*)value)) {
+                        counterGreaterThan++;
+                    } else if (table.rows[i].cells[columnIndex].value.intValue < *((int*)value)) {
+                        counterLessThan++;
+                    }
+                    break;
+                case FLOAT:
+                    if (table.rows[i].cells[columnIndex].value.floatValue > *((float*)value)) {
+                        counterGreaterThan++;
+                    } else if (table.rows[i].cells[columnIndex].value.floatValue < *((float*)value)) {
+                        counterLessThan++;
+                    }
+                    break;
+                case DOUBLE:
+                    if (table.rows[i].cells[columnIndex].value.doubleValue > *((double*)value)) {
+                        counterGreaterThan++;
+                    } else if (table.rows[i].cells[columnIndex].value.doubleValue < *((double*)value)) {
+                        counterLessThan++;
+                    }
+                    break;
+            }
+        }
+
+        printf("Valor não encontrado. Existem %d valores maiores e %d valores menores que o solicitado. Gostaria de saber quais?\n", counterGreaterThan, counterLessThan);
+        printf("Para valores maiores, digite G.\nPara valores menores, digite L.\n");
+
+        char entrada;
+        scanf(" %c", &entrada);
+        entrada = toupper(entrada);
+
+        if (entrada == 'G') {
+            for (int i = 0; i < table.numRows; i++) {
+                switch (column.type) {
+                    case INT:
+                        if (table.rows[i].cells[columnIndex].value.intValue > *((int*)value)) {
+                            printf("%d ", table.rows[i].cells[columnIndex].value.intValue);
+                        }
+                        break;
+                    case FLOAT:
+                        if (table.rows[i].cells[columnIndex].value.floatValue > *((float*)value)) {
+                            printf("%.2f ", table.rows[i].cells[columnIndex].value.floatValue);
+                        }
+                        break;
+                    case DOUBLE:
+                        if (table.rows[i].cells[columnIndex].value.doubleValue > *((double*)value)) {
+                            printf("%.2lf ", table.rows[i].cells[columnIndex].value.doubleValue);
+                        }
+                        break;
+                }
+            }
+        } else if (entrada == 'L') {
+            for (int i = 0; i < table.numRows; i++) {
+                switch (column.type) {
+                    case INT:
+                        if (table.rows[i].cells[columnIndex].value.intValue < *((int*)value)) {
+                            printf("%d ", table.rows[i].cells[columnIndex].value.intValue);
+                        }
+                        break;
+                    case FLOAT:
+                        if (table.rows[i].cells[columnIndex].value.floatValue < *((float*)value)) {
+                            printf("%.2f ", table.rows[i].cells[columnIndex].value.floatValue);
+                        }
+                        break;
+                    case DOUBLE:
+                        if (table.rows[i].cells[columnIndex].value.doubleValue < *((double*)value)) {
+                            printf("%.2lf ", table.rows[i].cells[columnIndex].value.doubleValue);
+                        }
+                        break;
+                }   
+            }
+        }
+    }
+    else if(column.type == STRING){
+        char *nameArray[table.numRows];
+        for(int i = 0; i < table.numRows; i++){
+            nameArray[i] = strdup(table.rows[i].cells[columnIndex].value.stringValue);
+        }
+
+        char *suggestion = suggestName(value, (const char **)nameArray, table.numRows);
+        printf("Valor não encontrado.\nVocê quis dizer: %s? [S|N]\n", suggestion);
+
+
+        char entrada;
+        scanf("%c", &entrada);
+        entrada = toupper(entrada);
+        if(entrada == 'S'){
+            printf("Valor encontrado na coluna %s.", column.name);
+        }
+        else if(entrada == 'N'){
+            printf("Valor não encontrado.");
+        }
+
+
+        for(int i = 0; i < table.numRows; i++){
+            free(nameArray[i]);
+        }
+}
+
+}
+
 
 /**
  * Função: isValidName
@@ -368,6 +478,21 @@ int valueExistsInColumn(Table table, Column column, Cell cells[], int numRows, v
  * 3. Retorna 1 se o valor foi encontrado;
  * 4. Armazena no ponteiro foundRow o número da linha que contém o valor;
  * 5. Retorna 0 se o valor não for encontrado.
+*/
+
+/**
+ * Função: valueNotFound
+ * ---------------------
+ * Sugere valores quando o valor procurado não foi encontrado.
+ * 
+ * A função segue os seguintes passos:
+ * 1. Verifica o tipo da coluna;
+ * 2. Se a coluna for de tipo numérico, conta quantos valores são maiores e quantos são menores que o valor solicitado;
+ * 3. Printa essa quantidade e solicita ao usuário se ele quer ver os valores menores ou os valores maiores;
+ * 4. Printa o que o usuário escolher.
+ * 5. Se a coluna for de tipo string, cria um array com as strings de cada célula;
+ * 6. Chama a função suggestName e printa uma sugestão de nome;
+ * 7. Por fim, solicita feedback do usuário quanto a sugestão e finaliza.
 */
 
 /** Patch Notes (03/12/2023 ~ Dio):
