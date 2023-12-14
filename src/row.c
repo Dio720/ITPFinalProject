@@ -138,14 +138,17 @@ void searchValue() {
     char columnName[MAX_NAME_LENGTH];
     int found = 0;
     int foundRow = 0;
+    
     Column tempColumn;
     printf("Digite o nome da tabela: ");
     fgets(tableName, MAX_NAME_LENGTH, stdin);
     removeNewLine(tableName);
     int index = findTableIndex(tableName);
+    clearTerminal();
 
     if (index == -1) {
         printf("Tabela não encontrada.\n");
+        clearTerminal();
         searchValue();
         return;
     }
@@ -156,6 +159,7 @@ void searchValue() {
         printf("%s\n", tempTable.columns[i].name);
     }
     fgets(columnName, MAX_NAME_LENGTH, stdin);
+    clearTerminal();
     removeNewLine(columnName);
     for (int i = 0; i < tempTable.numColumns; i++) {
         if (strcmp(tempTable.columns[i].name, columnName) == 0) {
@@ -172,56 +176,55 @@ void searchValue() {
             case INT: {
                 int value;
                 scanf("%d", &value);
-                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, foundRow)) {
-                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 2);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
                 } else {
-                    printf("Valor não encontrado na coluna %s.\n", tempColumn.name);
-                    //Implementar sugestão de nomes
+                    valueNotFound(&value, tempTable, tempColumn);
                 }
                 break;
             }
             case FLOAT: {
                 float value;
                 scanf("%f", &value);
-                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, foundRow)) {
-                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 2);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
                 } else {
-                    printf("Valor não encontrado na coluna %s.\n", tempColumn.name);
-                    //Implementar sugestão de nomes
-                }
-                break;
-            }
-           case STRING: {
-                char value[MAX_CELL_LENGTH];
-                fgets(value, MAX_CELL_LENGTH, stdin);
-                removeNewLine(value);
-                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, value, foundRow)) {
-                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 2);
-                } else {
-                    printf("Valor não encontrado na coluna %s.\n", tempColumn.name);
-                    //Implementar sugestão de nomes
+                    valueNotFound(&value, tempTable, tempColumn);
                 }
                 break;
             }
             case DOUBLE: {
                 double value;
                 scanf("%lf", &value);
-                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, foundRow)) {
-                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 2);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
                 } else {
-                    printf("Valor não encontrado na coluna %s.\n", tempColumn.name);
-                    //Implementar sugestão de nomes
+                    valueNotFound(&value, tempTable, tempColumn);
+                }
+                break;
+            }
+            case STRING: {
+                char value[MAX_CELL_LENGTH];
+                fgets(value, MAX_CELL_LENGTH, stdin);
+                removeNewLine(value);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                } else {
+                    valueNotFound(value, tempTable, tempColumn);
                 }
                 break;
             }
             case CHAR: {
                 char value;
                 scanf(" %c", &value);
-                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, foundRow)) {
-                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 2);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
                 } else {
-                    printf("Valor não encontrado na coluna %s.\n", tempColumn.name);
-                    //Implementar sugestão de nomes
+                    printf("Valor não encontrado. Valores da coluna %s:\n", tempColumn.name);
+                    for(int i = 0; i < tempTable.numRows; i++){
+                        printf("%c\n", tempTable.rows[i].cells[findColumnIndex(tables, tempColumn.name)].value.charValue);
+                    }
+
                 }
                 break;
             }
@@ -334,5 +337,6 @@ void searchValue() {
  * 6. Se não encontrar, printa um erro e chama a função searchValue novamente;
  * 7. Se encontrar, armazena a coluna solicitada numa variável temporária;
  * 8. Recebe um valor de qualquer tipo para procurar na coluna;
- * 9. Retorna se o valor foi encontrado e se sim, em qual linha.
+ * 9. Retorna se o valor foi encontrado e se sim, em qual linha;
+ * 10. Se o valor não for encontrado, chama a função valueNotFound().
 */
