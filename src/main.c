@@ -119,9 +119,9 @@ int main() {
                     deleteRowUserInteraction();
                     pauseProgram();
                     break;
-                /*case 7:
-                    // Chamar função para procurar linha
-                    break;*/
+                case 7:
+                    searchValue();
+                    break;
                 case 8: {
                     char* filename = readFileName();
                     if (filename == NULL) {
