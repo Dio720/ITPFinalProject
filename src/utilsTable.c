@@ -194,6 +194,47 @@ int findTableIndex(char* tableName) {
     return -1;
 }
 
+int valueExistsInColumn(Table table, Column column, Cell cells[], int numRows, void* value, int* foundRow) {
+    for (int i = 0; i < numRows; i++) {
+        for(int j = 0; j < MAX_COLUMNS;j++)
+        switch (column.type) {
+            case INT:
+                if (table.rows[i].cells[j].value.intValue == *((int*)value)) {
+                    return 1; 
+                    *foundRow = i;
+                }
+                break;
+            case FLOAT:
+                if (table.rows[i].cells[j].value.floatValue == *((float*)value)) {
+                    return 1;
+                    *foundRow = i;
+                }
+                break;
+            case DOUBLE:
+                if (table.rows[i].cells[j].value.doubleValue == *((double*)value)) {
+                    return 1; 
+                    *foundRow = i;
+                }
+                break;
+            case CHAR:
+                if (table.rows[i].cells[j].value.charValue == *((char*)value)) {
+                    return 1;
+                    *foundRow = i;
+                }
+                break;
+            case STRING:
+                if (strcmp(table.rows[i].cells[j].value.stringValue, (char*)value) == 0) {
+                    return 1; 
+                    *foundRow = i;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return 0; 
+}
+
 
 /**
  * Função: isValidName
@@ -315,6 +356,19 @@ int findTableIndex(char* tableName) {
  * @param tableName: O nome da tabela.
  * @return: O índice da tabela, ou -1 se a tabela não for encontrada.
  */
+
+/**
+ * Função: valueExistsInColumn
+ * ---------------------------
+ * Verifica se um valor existe em uma coluna.
+ * 
+ * A função segue os seguintes passos:
+ * 1. Percorre todas as células de uma coluna;
+ * 2. Verifica se o valor recebido está dentro de alguma das células, levando em conta seu tipo;
+ * 3. Retorna 1 se o valor foi encontrado;
+ * 4. Armazena no ponteiro foundRow o número da linha que contém o valor;
+ * 5. Retorna 0 se o valor não for encontrado.
+*/
 
 /** Patch Notes (03/12/2023 ~ Dio):
  * Criado o arquivo com todas as suas funções:
