@@ -138,17 +138,17 @@ void searchValue() {
     char columnName[MAX_NAME_LENGTH];
     int found = 0;
     int foundRow = 0;
+    int c;
     
     Column tempColumn;
     printf("Digite o nome da tabela: ");
     fgets(tableName, MAX_NAME_LENGTH, stdin);
     removeNewLine(tableName);
     int index = findTableIndex(tableName);
-    clearTerminal();
+    
 
     if (index == -1) {
         printf("Tabela não encontrada.\n");
-        clearTerminal();
         searchValue();
         return;
     }
@@ -159,7 +159,6 @@ void searchValue() {
         printf("%s\n", tempTable.columns[i].name);
     }
     fgets(columnName, MAX_NAME_LENGTH, stdin);
-    clearTerminal();
     removeNewLine(columnName);
     for (int i = 0; i < tempTable.numColumns; i++) {
         if (strcmp(tempTable.columns[i].name, columnName) == 0) {
@@ -176,32 +175,38 @@ void searchValue() {
             case INT: {
                 int value;
                 scanf("%d", &value);
+                while ((c = getchar()) != '\n' && c != EOF);
                 if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
                     printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
                 } else {
                     valueNotFound(&value, tempTable, tempColumn);
+                    break;
                 }
-                break;
             }
             case FLOAT: {
                 float value;
                 scanf("%f", &value);
+                while ((c = getchar()) != '\n' && c != EOF);
                 if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
                     printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
                 } else {
                     valueNotFound(&value, tempTable, tempColumn);
+                    break;
                 }
-                break;
             }
             case DOUBLE: {
                 double value;
                 scanf("%lf", &value);
+                while ((c = getchar()) != '\n' && c != EOF);
                 if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
                     printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
                 } else {
                     valueNotFound(&value, tempTable, tempColumn);
+                    break;
                 }
-                break;
             }
             case STRING: {
                 char value[MAX_CELL_LENGTH];
@@ -209,24 +214,28 @@ void searchValue() {
                 removeNewLine(value);
                 if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, value, &foundRow)) {
                     printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
                 } else {
                     valueNotFound(value, tempTable, tempColumn);
+                    break;
                 }
-                break;
             }
             case CHAR: {
                 char value;
                 scanf(" %c", &value);
+                while ((c = getchar()) != '\n' && c != EOF);
                 if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
                     printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
                 } else {
                     printf("Valor não encontrado. Valores da coluna %s:\n", tempColumn.name);
                     for(int i = 0; i < tempTable.numRows; i++){
                         printf("%c\n", tempTable.rows[i].cells[findColumnIndex(tables, tempColumn.name)].value.charValue);
                     }
+                    break;
 
                 }
-                break;
+                
             }
             default:
                 break;

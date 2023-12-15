@@ -121,6 +121,7 @@ int main() {
                     break;
                 case 7:
                     searchValue();
+                    pauseProgram();
                     break;
                 case 8: {
                     char* filename = readFileName();

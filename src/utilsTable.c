@@ -240,6 +240,7 @@ void valueNotFound(void *value, Table table, Column column) {
     int counterLessThan = 0;
     int columnIndex = findColumnIndex(tables, column.name);
     char **nameArray[table.numRows];
+    int c;
 
     if (column.type == INT || column.type == FLOAT || column.type == DOUBLE) {
         for (int i = 0; i < table.numRows; i++) {
@@ -273,6 +274,7 @@ void valueNotFound(void *value, Table table, Column column) {
 
         char entrada;
         scanf(" %c", &entrada);
+        while ((c = getchar()) != '\n' && c != EOF);
         entrada = toupper(entrada);
 
         if (entrada == 'G') {
@@ -329,12 +331,13 @@ void valueNotFound(void *value, Table table, Column column) {
 
         char entrada;
         scanf("%c", &entrada);
+        while ((c = getchar()) != '\n' && c != EOF);
         entrada = toupper(entrada);
         if(entrada == 'S'){
-            printf("Valor encontrado na coluna %s.", column.name);
+            printf("Valor encontrado na coluna %s.\n", column.name);
         }
         else if(entrada == 'N'){
-            printf("Valor não encontrado.");
+            printf("Valor não encontrado.\n");
         }
 
 
