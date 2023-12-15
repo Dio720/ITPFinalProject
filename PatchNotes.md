@@ -1,3 +1,14 @@
+# Patch Notes (15/12/2023 ~ schwaad) v01.2 - Terminado?!?
+
+## Mudanças Gerais:
+
+* Implementada a searchValue (GRAÇAS A DEUS A ÚLTIMA);
+* Implementadas as funções auxiliares valueNotFound e valueExistsInColumn;
+* `main.c` Alterada para conter a searchValue;
+* Algumas hotfixes na função searchValue (limpar buffer de entrada, adicionar uns newLines, mensagens de erro, etc);
+* Adicionadas as funções implementadas no `row.h` e `utilsTable.h`;
+
+
 # Patch Notes (03/12/2023 ~ Dio) v01 - PRIMEIRA VERSÃO FUNCIONAL!
 
 
