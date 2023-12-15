@@ -133,6 +133,119 @@ void deleteRow(char* tableName, unsigned int rowId) {
     printf("A linha com ID %u foi deletada com sucesso da tabela '%s'.\n", rowId, tableName);
 }
 
+void searchValue() {
+    char tableName[MAX_NAME_LENGTH];
+    char columnName[MAX_NAME_LENGTH];
+    int found = 0;
+    int foundRow = 0;
+    int c;
+    
+    Column tempColumn;
+    printf("Digite o nome da tabela: ");
+    fgets(tableName, MAX_NAME_LENGTH, stdin);
+    removeNewLine(tableName);
+    int index = findTableIndex(tableName);
+    
+
+    if (index == -1) {
+        printf("Tabela não encontrada.\n");
+        searchValue();
+        return;
+    }
+    Table tempTable = tables[index];
+
+    printf("Escolha uma coluna para procurar o valor:\n");
+    for (int i = 0; i < tempTable.numColumns; i++) {
+        printf("%s\n", tempTable.columns[i].name);
+    }
+    fgets(columnName, MAX_NAME_LENGTH, stdin);
+    removeNewLine(columnName);
+    for (int i = 0; i < tempTable.numColumns; i++) {
+        if (strcmp(tempTable.columns[i].name, columnName) == 0) {
+            tempColumn = tempTable.columns[i];
+            found = 1;
+            break;
+        }
+    }
+
+    if (found == 1) {
+        printf("Digite o valor que está procurando: ");
+
+        switch (tempColumn.type) {
+            case INT: {
+                int value;
+                scanf("%d", &value);
+                while ((c = getchar()) != '\n' && c != EOF);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
+                } else {
+                    valueNotFound(&value, tempTable, tempColumn);
+                    break;
+                }
+            }
+            case FLOAT: {
+                float value;
+                scanf("%f", &value);
+                while ((c = getchar()) != '\n' && c != EOF);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
+                } else {
+                    valueNotFound(&value, tempTable, tempColumn);
+                    break;
+                }
+            }
+            case DOUBLE: {
+                double value;
+                scanf("%lf", &value);
+                while ((c = getchar()) != '\n' && c != EOF);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
+                } else {
+                    valueNotFound(&value, tempTable, tempColumn);
+                    break;
+                }
+            }
+            case STRING: {
+                char value[MAX_CELL_LENGTH];
+                fgets(value, MAX_CELL_LENGTH, stdin);
+                removeNewLine(value);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
+                } else {
+                    valueNotFound(value, tempTable, tempColumn);
+                    break;
+                }
+            }
+            case CHAR: {
+                char value;
+                scanf(" %c", &value);
+                while ((c = getchar()) != '\n' && c != EOF);
+                if (valueExistsInColumn(tempTable, tempColumn, tempTable.rows[0].cells, tempTable.numRows, &value, &foundRow)) {
+                    printf("Valor encontrado na coluna %s. Linha: %d.\n", tempColumn.name, foundRow + 1);
+                    break;
+                } else {
+                    printf("Valor não encontrado. Valores da coluna %s:\n", tempColumn.name);
+                    for(int i = 0; i < tempTable.numRows; i++){
+                        printf("%c\n", tempTable.rows[i].cells[findColumnIndex(tables, tempColumn.name)].value.charValue);
+                    }
+                    break;
+
+                }
+                
+            }
+            default:
+                break;
+        }
+    } else {
+        printf("Coluna não encontrada.\n");
+        searchValue();
+    }
+}
+
 /**
  * Função: readCell
  * ----------------
@@ -218,3 +331,21 @@ void deleteRow(char* tableName, unsigned int rowId) {
  * @param tableName: O nome da tabela.
  * @param rowId: O ID da linha.
  */
+
+/**
+ * Função: searchValue
+ * -----------------
+ * Procura um valor em uma determinada tabela.
+ * 
+ * A função segue os seguintes passos:
+ * 1. Solicita o nome de uma tabela;
+ * 2. Percorre o vetor de tabelas procurando pela tabela solicitada;
+ * 3. Se não encontrar, printa um erro e chama a função searchValue novamente;
+ * 4. Se encontrar, armazena a tabela solicitada numa variável temporária;
+ * 5. Lista todas as colunas da tabela e pergunta em qual o usuário deseja procurar;
+ * 6. Se não encontrar, printa um erro e chama a função searchValue novamente;
+ * 7. Se encontrar, armazena a coluna solicitada numa variável temporária;
+ * 8. Recebe um valor de qualquer tipo para procurar na coluna;
+ * 9. Retorna se o valor foi encontrado e se sim, em qual linha;
+ * 10. Se o valor não for encontrado, chama a função valueNotFound().
+*/

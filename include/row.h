@@ -12,6 +12,7 @@ int findRowIndex(Table* table, unsigned int rowId);
 int rowExists(char* tableName, unsigned int rowId);
 void createRowLogic(Row newRow, char* tableName);
 void deleteRow(char* tableName, unsigned int rowId);
+void searchValue();
 
 
 #endif // PROJETO_FINAL_ITP_ROW_H
