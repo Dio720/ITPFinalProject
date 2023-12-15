@@ -75,7 +75,6 @@ char *processRows(char *line, Table *table) {
                 initCellAsEmpty(&table->rows[i].cells[j]);
             }
 
-            // Adicionado para armazenar o ID da linha
             if (j == 0) {
                 table->rows[i].id = atoi(cellValue);
             }
