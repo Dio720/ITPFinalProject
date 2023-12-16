@@ -6,7 +6,6 @@ set(CMAKE_C_STANDARD 11)
 
 # Incluindo os diretórios de cabeçalho
 include_directories(include)
-include_directories(unitTests/includeTests)
 
 # Especificando os arquivos fonte para mylib
 file(GLOB_RECURSE MYLIB_SOURCES "src/*.c" "include/*.h")

@@ -35,6 +35,7 @@ char* suggestName(const char *name, const char *names[], int numNames);
  * Correções pontuais.
  */
 
+
 /** Patch Notes (03/12/2023 ~ Dio):
  * - Adicionada a readFloat
  * - Adicionada a readChar

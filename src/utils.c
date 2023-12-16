@@ -1,4 +1,4 @@
-// Descriçãi Funções auxiliares utéis
+// Descrição Funções auxiliares utéis
 // Created by dio on 25/11/23.
 //
 
